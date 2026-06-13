@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php wp_title('|', true, 'right'); bloginfo('name'); ?></title>
     <!-- Dynamically linking your CSS folder from the screenshot -->
-    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/style.css?v=1.0.0">
+    <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/style.css?v=1.0.1">
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
@@ -13,7 +13,12 @@
 
 <div class="logo">
 <a class="logo-link" href="<?php echo site_url(); ?>">
+    <?php $logoImg = get_header_image(); ?>
+    <?php if ($logoImg) : ?>
+        <img src="<?php echo $logoImg; ?>" alt="<?php bloginfo('name'); ?>">
+    <?php else : ?>
         <h2>IYA International</h2>
+    <?php endif; ?>
         </a>
         </div>
    
