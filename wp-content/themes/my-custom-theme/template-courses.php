@@ -31,6 +31,18 @@ while($coursesquery->have_posts()) {
     $coursesquery->the_post();
     $imagepath = wp_get_attachment_image_src(get_post_thumbnail_id(),'large');
 
+
+    
+    $course_terms = get_the_terms( get_the_ID(), 'courses_category' );
+    $display_categories = 'Uncategorized';
+    if ( ! empty( $course_terms ) && ! is_wp_error( $course_terms ) ) {
+        $term_names = array();
+        foreach ( $course_terms as $term ) {
+            $term_names[] = $term->name;
+        }
+        // Join them with a comma if a course has multiple categories assigned
+        $display_categories = implode( ', ', $term_names );
+    }
 ?>
     <!-- Card 1: Web Development -->
     <div class="course-card">
@@ -40,9 +52,9 @@ while($coursesquery->have_posts()) {
         </div>
         <div class="course-card-body">
             <h3><?php the_title(); ?></h3>
-            <p>Master full-stack programming tools including PHP, Laravel architectures, and complex relational databases from scratch.</p>
+            <p><?php the_content(); ?></p>
             <div class="course-meta">
-                <span><strong>Eligibility:</strong> 10th / 12th / Grad</span>
+                <span><strong>Category:</strong></span> <span style="float:right" ><?php echo esc_html($display_categories); ?></span>
             </div>
             <a href="<?php echo home_url('/enquiry'); ?>" class="enroll-btn">Enquire Now</a>
         </div>
