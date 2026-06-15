@@ -24,13 +24,22 @@ get_header(); ?>
 <!-- 3. Dynamic Course Grid Section -->
 <div class="course-grid-container">
     
+
+<?php $wpcourses = array('post_type'=>'all-courses','post_status'=>'publish');
+$coursesquery = new WP_Query($wpcourses);
+while($coursesquery->have_posts()) {
+    $coursesquery->the_post();
+    $imagepath = wp_get_attachment_image_src(get_post_thumbnail_id(),'large');
+
+?>
     <!-- Card 1: Web Development -->
     <div class="course-card">
-        <div class="course-card-header">
-            <span class="duration-badge">6 Months</span>
+        <img src="<?php echo $imagepath[0]; ?>" alt="">
+        <div style="position: relative;">
+            <span class="duration-badge"><?php echo get_the_date(); ?></span>
         </div>
         <div class="course-card-body">
-            <h3>Advanced Web Development</h3>
+            <h3><?php the_title(); ?></h3>
             <p>Master full-stack programming tools including PHP, Laravel architectures, and complex relational databases from scratch.</p>
             <div class="course-meta">
                 <span><strong>Eligibility:</strong> 10th / 12th / Grad</span>
@@ -39,35 +48,7 @@ get_header(); ?>
         </div>
     </div>
 
-    <!-- Card 2: Frontend Frameworks -->
-    <div class="course-card">
-        <div class="course-card-header framework-bg">
-            <span class="duration-badge">3 Months</span>
-        </div>
-        <div class="course-card-body">
-            <h3>Frontend Technologies</h3>
-            <p>Build modern single-page web programs using pure JavaScript scripting fundamentals, asynchronous APIs, and interactive UI frameworks.</p>
-            <div class="course-meta">
-                <span><strong>Eligibility:</strong> Basic IT Knowledge</span>
-            </div>
-            <a href="<?php echo home_url('/enquiry'); ?>" class="enroll-btn">Enquire Now</a>
-        </div>
-    </div>
-
-    <!-- Card 3: Basic Digital Literacy -->
-    <div class="course-card">
-        <div class="course-card-header basic-bg">
-            <span class="duration-badge">2 Months</span>
-        </div>
-        <div class="course-card-body">
-            <h3>Computer Applications (DCA)</h3>
-            <p>Gain absolute command over structural documentation, automated spreadsheets, professional emails, and day-to-day computing logic.</p>
-            <div class="course-meta">
-                <span><strong>Eligibility:</strong> Anyone Interested</span>
-            </div>
-            <a href="<?php echo home_url('/enquiry'); ?>" class="enroll-btn">Enquire Now</a>
-        </div>
-    </div>
+<?php } ?>
 
 </div>
 

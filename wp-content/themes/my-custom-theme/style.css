@@ -1734,3 +1734,221 @@ body {
         width: 100% !important;
     }
 }
+
+/* ==========================================================================
+   FORCE 404 SEARCH BAR FULL WIDTH FIX
+   ========================================================================== */
+
+/* 1. Main wrapper area container */
+.error-search-wrapper {
+    max-width: 500px;
+    margin: 0 auto 40px auto;
+    width: 100%;
+}
+
+/* 2. Target the core form element */
+.error-search-wrapper form {
+    display: flex !important;
+    width: 100% !important;
+    gap: 10px !important;
+    align-items: center !important;
+}
+
+/* 3. Handle any hidden WordPress labels that shrink the content */
+.error-search-wrapper label {
+    display: block !important;
+    flex: 1 !important;
+    width: 100% !important;
+    margin: 0 !important;
+}
+
+/* 4. FORCE the text entry box to expand and fill the space */
+.error-search-wrapper input[type="search"],
+.error-search-wrapper .search-field {
+    width: 100% !important;
+    display: block !important;
+    height: 46px !important;
+    padding: 0 16px !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    font-size: 15px !important;
+    color: #0f172a !important;
+    background-color: #ffffff !important;
+    box-sizing: border-box !important;
+    outline: none !important;
+}
+
+/* Focus glow ring outline */
+.error-search-wrapper input[type="search"]:focus,
+.error-search-wrapper .search-field:focus {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15) !important;
+}
+
+/* 5. Target the search button element explicitly */
+.error-search-wrapper input[type="submit"],
+.error-search-wrapper .search-submit {
+    height: 46px !important;
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 0 24px !important;
+    border-radius: 6px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+}
+
+.error-search-wrapper input[type="submit"]:hover,
+.error-search-wrapper .search-submit:hover {
+    background-color: #1e293b !important;
+}
+
+/* ==========================================================================
+   ACADEMY SEARCH FORM LAYOUT FIX
+   ========================================================================== */
+
+/* Main form container wrapper */
+.error-search-wrapper {
+    max-width: 500px;
+    margin: 0 auto 40px auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Flex row setup */
+.custom-404-form {
+    display: flex !important;
+    width: 100% !important;
+    gap: 12px !important;
+    align-items: center !important;
+}
+
+/* Force the Input Field to expand across all available space */
+.custom-404-form .acad-input {
+    flex: 1 !important; /* This expands the input width completely */
+    width: 100% !important;
+    height: 46px !important;
+    padding: 0 16px !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    font-size: 15px !important;
+    color: #0f172a !important;
+    background-color: #ffffff !important;
+    box-sizing: border-box !important;
+    outline: none !important;
+    transition: all 0.2s ease !important;
+}
+
+/* Input Focus Border ring */
+.custom-404-form .acad-input:focus {
+    border-color: #38bdf8 !important;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15) !important;
+}
+
+/* Submit Button Style */
+.custom-404-form .acad-btn {
+    height: 46px !important;
+    background-color: #0f172a !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 0 24px !important;
+    border-radius: 6px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    transition: background-color 0.2s ease !important;
+}
+
+.custom-404-form .acad-btn:hover {
+    background-color: #1e293b !important;
+}
+
+
+/* ==========================================================================
+   FULL-WIDTH HOMEPAGE CATEGORY TILES (VERTICAL STACK DESIGN)
+   ========================================================================== */
+
+/* Full screen structural background wrap directly above the site footer */
+.home-categories-fullwidth {
+    width: 100%;
+    background-color: #faf9f5 !important; /* Subtle distinct slate gray floor background split */
+    padding: 25px 0;
+    border-top: 1px solid #e2e8f0;
+    box-sizing: border-box;
+}
+
+.academy-category-tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+
+/* Custom Box Style: Icon STACKED ON TOP of text */
+.category-tile-box.column-box-style {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 0px;
+    padding: 10px 0px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 5px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.01);
+}
+
+.category-tile-box.column-box-style:hover {
+    transform: translateY(-5px);
+    border-color: #38bdf8;
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+}
+
+/* Rounded Circle Icon frame placement directly on top */
+.category-tile-box.column-box-style .category-tile-icon-frame {
+    width: 56px;
+    height: 56px;
+    background-color: #f1f5f9;
+    border-radius: 50%; /* Perfect round badge look */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.category-tile-box.column-box-style:hover .category-tile-icon-frame {
+    background-color: #e0f2fe;
+}
+
+.category-tile-box.column-box-style .category-icon-emoji {
+    font-size: 24px;
+}
+
+/* Typography configuration sitting cleanly UNDER the box icon badge */
+.category-tile-box.column-box-style .category-tile-info h3 {
+    margin: 0 0 6px 0;
+    font-size: 17px;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.category-tile-box.column-box-style .category-post-counter {
+    margin: 0;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 500;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 992px) {
+    .academy-category-tiles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 500px) {
+    .academy-category-tiles-grid { grid-template-columns: 1fr; }
+}

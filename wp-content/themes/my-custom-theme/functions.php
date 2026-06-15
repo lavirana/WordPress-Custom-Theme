@@ -1,17 +1,10 @@
 <?php
-
 /**
  * Functions for the My Custom Theme
  * Author: Ashish Rana
  * Author URI: https://thetechinfo.net/
  * Version: 1.0
  */
-
-
-
-
-
-
     register_nav_menus(array(
         'primary' => 'Primary Menu', 'menu_class' => 'main-nav'
     ));
@@ -41,10 +34,8 @@ function my_custom_theme_enqueue_scripts() {
     wp_enqueue_script('my-custom-theme-script', get_template_directory_uri() . '/script.js', array('jquery'), '1.0', true);
 }
 add_action('wp_enqueue_scripts', 'my_custom_theme_enqueue_scripts');
-
-
-
 add_theme_support('custom-background');
+add_post_type_support('page', 'excerpt');
 
 
 /*
