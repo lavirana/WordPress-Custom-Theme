@@ -47,9 +47,11 @@
 
 
 
- function my_sc_function(){
-    return 'Function Call';
+
+ function my_sc_function($atts){
+    return 'Function Call'. $atts['msg'];
  }
+
  add_shortcode('my-sc','my_sc_function');
 
 
