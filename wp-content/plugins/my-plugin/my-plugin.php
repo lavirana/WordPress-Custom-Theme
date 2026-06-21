@@ -33,8 +33,6 @@
 
 
  register_activation_hook(__FILE__, 'my_plugin_activation');
-
-
  function my_plugin_deactivation(){
     global $wpdb, $table_prefix;
     $wp_emp = $table_prefix.'emp';
@@ -49,7 +47,18 @@
 
 
  function my_sc_function($atts){
-    return 'Function Call'. $atts['msg'];
+    $atts = array_change_key_case($atts, CASE_LOWER);
+    $atts = shortcode_atts(array('msg' => 'I am Good'), $atts);
+   
+    //ob_start();
+    ?>
+<!---<h1>Hello Buddy</h1>-->
+<?php
+    //$html = ob_get_clean();
+    //return 'Function Call'. $atts['msg'];
+     include 'notice.php';
+    //include 'slider.php';
+    //return $html;
  }
 
  add_shortcode('my-sc','my_sc_function');
