@@ -82,7 +82,9 @@ function my_plugin_front_scripts() {
 
 
 $ver_style = filemtime(plugin_dir_path(__FILE__) . 'css/style.css');
+if(is_page('sample-page')):
 wp_enqueue_style('my-custom-style', $path_style, '', $ver_style);
+endif;
 
    // 4. Register and queue the script file safely
    wp_enqueue_script('my-custom-js', $path, $dep, $ver, true);
@@ -105,6 +107,69 @@ add_action('wp_enqueue_scripts', 'my_plugin_front_scripts');
 
 add_action('wp_enqueue_scripts', 'my_plugin_scripts');
 
+function my_theme(){
+   global $wpdb, $table_prefix;
+   $wp_emp = $table_prefix.'emp';
+
+   $q = "SELECT * from `$wp_emp`";
+   $results = $wpdb->get_results($q);
+
+  ob_start()
+  ?>
+<table>
+   <thead>
+   <th>
+      <td>Id</td>
+      <td>Name</td>
+      <td>Email</td>
+      <td>Status</td>
+   </th>
+   </thead>
+<tbody>
+   <?php foreach($results as $row): ?>
+   <tr>
+      <td><?php echo $row->ID; ?></td>
+      <td><?php echo $row->name; ?></td>
+      <td><?php echo $row->email; ?></td>
+      <td><?php echo $row->status; ?></td>
+   </tr>
+   <?php endforeach; ?>
+</tbody>
+</table>
+<?php
+$html = ob_get_clean();
+return $html;
+}
+add_shortcode('my-theme', 'my_theme');
 
 
+
+function my_posts(){
+   $args = array(
+      'post_type' => 'post',
+      'posts_per_page' => 5,
+      'offset' => 2,
+      'orderby' => 'ID',
+      'order' => 'ASC'
+   );
+
+   $query = new WP_Query($args);
+   ob_start();
+   if($query->have_posts()):
+   ?>
+
+
+<?php  while($query->have_posts()){
+   $query->the_post();
+   echo the_title('<h2>','</h2>') .'-'. the_content('<p>','</p>');
+}  ?>
+
+
+   <?php
+   endif;
+   wp_reset_postdata();
+   $html = ob_get_clean();
+   return $html;
+}
+add_shortcode('my-posts','my_posts');
 ?>
