@@ -71,6 +71,7 @@
 function my_plugin_front_scripts() {
    // 1. Setup path relative to this plugin file location
    $path = plugins_url('js/main.js', __FILE__);
+   $path_style = plugins_url('css/style.css', __FILE__);
    
    // 2. Define dependencies (e.g., jQuery)
    $dep = array('jquery');
@@ -78,9 +79,15 @@ function my_plugin_front_scripts() {
    // 3. Dynamic version control based on file modification timestamp
    $ver = filemtime(plugin_dir_path(__FILE__) . 'js/main.js');
 
+
+
+$ver_style = filemtime(plugin_dir_path(__FILE__) . 'css/style.css');
+wp_enqueue_style('my-custom-style', $path_style, '', $ver_style);
+
    // 4. Register and queue the script file safely
    wp_enqueue_script('my-custom-js', $path, $dep, $ver, true);
 }
+
 
 // Crucial: Tie the function to the frontend enqueue hook event
 add_action('wp_enqueue_scripts', 'my_plugin_front_scripts');
