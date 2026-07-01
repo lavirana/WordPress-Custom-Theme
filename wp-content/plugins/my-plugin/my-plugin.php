@@ -87,7 +87,7 @@ wp_enqueue_style('my-custom-style', $path_style, '', $ver_style);
 endif;
 
    // 4. Register and queue the script file safely
-   wp_enqueue_script('my-custom-js', $path, $dep, $ver, true);
+   wp_enqueue_script('my-custom-js','var ajaxUrl = "'.admin_url('admin-ajax.php').'"', $path, $dep, $ver, true);
 }
 
 
@@ -245,5 +245,15 @@ function my_plugin_menu(){
 }
 
 add_action('admin_menu', 'my_plugin_menu');
+
+
+
+add_action('wp_ajax_my_search_func','my_search_func');
+
+function my_search_func(){
+   echo 'ss';
+}
+
+
 
 ?>

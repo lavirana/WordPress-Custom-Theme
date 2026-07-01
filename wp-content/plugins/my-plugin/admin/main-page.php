@@ -1,9 +1,12 @@
 <?php
 
 global $wpdb, $table_prefix;
-$wp_emp = $table_prefix.'emp';
-
-$q = "SELECT * from `$wp_emp`";
+$wp_emp = $table_prefix.'users';
+if(isset($_GET['my_search_term'])){
+ $q = "SELECT * from `$wp_emp` WHERE `user_nicename` LIKE '%".$_GET['my_search_term']."%';";
+}else{
+ $q = "SELECT * from `$wp_emp`";
+}
 $results = $wpdb->get_results($q);
 
 ob_start();
@@ -59,7 +62,16 @@ ob_start();
     }
 </style>
 
-<div class="emp-table-container">
+<div class="emp-table-container wrap">
+    <h2>My Plugin Page</h2>
+    <div class="my-form">
+        <form action="<?php echo admin_url('admin.php'); ?>" id="my-search-form">
+            <input type="hidden" name="page" value="my-plugin-page">
+            <input type="text" name="my_search_term" id="my-search-term">
+            <input type="submit" value="search" name="search" />
+        </form>
+    </div>
+    <br>
     <table class="emp-data-table">
         <thead>
             <tr>
@@ -74,9 +86,9 @@ ob_start();
                 <?php foreach($results as $row): ?>
                 <tr>
                    <td><?php echo esc_html($row->ID); ?></td>
-                   <td><?php echo esc_html($row->name); ?></td>
-                   <td><?php echo esc_html($row->email); ?></td>
-                   <td><span class="status-badge"><?php echo esc_html($row->status); ?></span></td>
+                   <td><?php echo esc_html($row->user_nicename); ?></td>
+                   <td><?php echo esc_html($row->user_email); ?></td>
+                   <td><span class="status-badge"><?php echo esc_html($row->user_status); ?></span></td>
                 </tr>
                 <?php endforeach; ?>
             <?php else: ?>
