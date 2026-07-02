@@ -114,7 +114,7 @@ add_action('wp_enqueue_scripts', 'my_plugin_front_scripts');
 }
 */
 
-add_action('wp_enqueue_scripts', 'my_plugin_scripts');
+//add_action('wp_enqueue_scripts', 'my_plugin_scripts');
 
 function my_theme(){
    global $wpdb, $table_prefix;
@@ -317,5 +317,26 @@ function my_search_func() {
    echo ob_get_clean();
    wp_die();
 }
+
+function my_cpt(){
+   $labels = array(
+      'name' => 'Cars',
+      'singular_name' => 'Car'
+   );
+   $supports = array('title', 'editor', 'thumbnail', 'comments', 'excerpts');
+
+   $options = array(
+      'labels' => $labels,
+      'public' => true,
+      'has_archive' => true,
+      'rewrite' => array('slug' => 'cars'),
+      'show_in_rest' => true,
+      'supports' => $supports,
+      'taxonomies' => array('categories')
+   );
+   register_post_type('cars', $options);
+}
+
+add_action('init','my_cpt');
 
 ?>
