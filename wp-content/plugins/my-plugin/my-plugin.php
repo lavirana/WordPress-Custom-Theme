@@ -63,47 +63,56 @@
 
  add_shortcode('my-sc','my_sc_function');
 
-
-
  /**
  * Properly enqueue custom scripts using the WordPress action hook
  */
 function my_plugin_front_scripts() {
-   // 1. Setup path relative to this plugin file location
-   $path = plugins_url('js/main.js', __FILE__);
-   $path_style = plugins_url('css/style.css', __FILE__);
-   
-   // 2. Define dependencies (e.g., jQuery)
-   $dep = array('jquery');
-   
-   // 3. Dynamic version control based on file modification timestamp
-   $ver = filemtime(plugin_dir_path(__FILE__) . 'js/main.js');
 
+   $js_url    = plugins_url('js/main.js', __FILE__);
+   $css_url   = plugins_url('css/style.css', __FILE__);
 
+   $js_ver    = filemtime(plugin_dir_path(__FILE__) . 'js/main.js');
+   $css_ver   = filemtime(plugin_dir_path(__FILE__) . 'css/style.css');
 
-$ver_style = filemtime(plugin_dir_path(__FILE__) . 'css/style.css');
-if(is_page('sample-page')):
-wp_enqueue_style('my-custom-style', $path_style, '', $ver_style);
-endif;
+   if ( is_page('sample-page') ) {
+       wp_enqueue_style(
+           'my-custom-style',
+           $css_url,
+           array(),
+           $css_ver
+       );
+   }
 
-   // 4. Register and queue the script file safely
-   wp_enqueue_script('my-custom-js','var ajaxUrl = "'.admin_url('admin-ajax.php').'"', $path, $dep, $ver, true);
+   wp_enqueue_script(
+       'my-custom-js',
+       $js_url,
+       array('jquery'),
+       $js_ver,
+       true
+   );
+
+   wp_localize_script(
+       'my-custom-js',
+       'my_ajax',
+       array(
+           'ajax_url' => admin_url('admin-ajax.php')
+       )
+   );
 }
-
 
 // Crucial: Tie the function to the frontend enqueue hook event
 add_action('wp_enqueue_scripts', 'my_plugin_front_scripts');
 
 
 
+/*
  function my_plugin_scripts() {
-
    $path = plugins_url('js/main.js', __FILE__);
    $dep  = array('jquery');
    $ver  = filemtime(plugin_dir_path(__FILE__) . 'js/main.js');
-
    wp_enqueue_script('my-custom-js', $path, $dep, $ver, true);
 }
+*/
 
 add_action('wp_enqueue_scripts', 'my_plugin_scripts');
 
@@ -114,7 +123,7 @@ function my_theme(){
    $q = "SELECT * from `$wp_emp`";
    $results = $wpdb->get_results($q);
 
-  ob_start()
+  ob_start();
   ?>
 <table>
    <thead>
@@ -216,6 +225,36 @@ function head_fun(){
 add_action('wp_head','head_fun');
 
 
+
+
+
+add_action('admin_enqueue_scripts', 'my_plugin_admin_scripts');
+
+function my_plugin_admin_scripts() {
+
+    $path = plugins_url('js/main.js', __FILE__);
+    $ver  = filemtime(plugin_dir_path(__FILE__) . 'js/main.js');
+
+    wp_enqueue_script(
+        'my-custom-js',
+        $path,
+        array('jquery'),
+        $ver,
+        true
+    );
+
+    wp_localize_script(
+        'my-custom-js',
+        'my_ajax',
+        array(
+            'ajax_url' => admin_url('admin-ajax.php')
+        )
+    );
+}
+
+
+
+
 function view_count() {
 
    if ( ! is_single() ) {
@@ -248,10 +287,27 @@ add_action('admin_menu', 'my_plugin_menu');
 
 
 
-add_action('wp_ajax_my_search_func','my_search_func');
 
-function my_search_func(){
-   echo 'ss';
+add_action('wp_ajax_my_search_func', 'my_search_func');
+add_action('wp_ajax_nopriv_my_search_func', 'my_search_func');
+
+
+function my_search_func() {
+   $search_term = '';
+       global $wpdb, $table_prefix;
+         $wp_emp = $table_prefix.'users';
+         $search_term = sanitize_text_field($_POST['search_term']);
+
+         if(!empty($search_term)){
+         $q = "SELECT * from `$wp_emp` WHERE `user_nicename` LIKE '%".$search_term."%';";
+         }else{
+         $q = "SELECT * from `$wp_emp`";
+         }
+         $results = $wpdb->get_results($q);
+     
+         
+
+   wp_die();
 }
 
 
