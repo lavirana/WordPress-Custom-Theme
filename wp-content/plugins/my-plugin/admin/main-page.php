@@ -81,7 +81,7 @@ ob_start();
                <th>Status</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="my-table-result">
             <?php if (!empty($results)): ?>
                 <?php foreach($results as $row): ?>
                 <tr>

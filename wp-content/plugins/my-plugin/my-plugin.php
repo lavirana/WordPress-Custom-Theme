@@ -299,17 +299,23 @@ function my_search_func() {
          $search_term = sanitize_text_field($_POST['search_term']);
 
          if(!empty($search_term)){
-         $q = "SELECT * from `$wp_emp` WHERE `user_nicename` LIKE '%".$search_term."%';";
+         $q = "SELECT * from `$wp_emp` WHERE `user_nicename` LIKE '%".$search_term."%' OR `user_email` LIKE '%".$search_term."%';";
          }else{
          $q = "SELECT * from `$wp_emp`";
          }
          $results = $wpdb->get_results($q);
-     
-         
-
+     ob_start();
+?>
+                <?php foreach($results as $row): ?>
+                <tr>
+                   <td><?php echo esc_html($row->ID); ?></td>
+                   <td><?php echo esc_html($row->user_nicename); ?></td>
+                   <td><?php echo esc_html($row->user_email); ?></td>
+                   <td><span class="status-badge"><?php echo esc_html($row->user_status); ?></span></td>
+                </tr>
+               <?php endforeach; 
+   echo ob_get_clean();
    wp_die();
 }
-
-
 
 ?>

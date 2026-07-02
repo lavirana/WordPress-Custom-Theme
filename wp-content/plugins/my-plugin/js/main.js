@@ -24,7 +24,8 @@ jQuery(function ($) {
 
             success: function (response) {
 
-                console.log(response);
+                //console.log(response);
+                $("#my-table-result").html(response);
 
             },
 
